@@ -41,6 +41,36 @@ print_words() and print_top().
 
 import sys
 
+import re
+import string
+def mkDic(filename):
+    frequency = {}
+    document_text = open(filename, 'r')
+    text_string = document_text.read().lower()
+    
+    for word in text_string.split():
+        count = frequency.get(word,0)
+        frequency[word] = count + 1
+     
+    return frequency
+
+def print_words(filename):
+    frequency = mkDic(filename)
+    print(frequency)
+    # frequency_list = frequency.keys()
+ 
+    # for words in frequency_list:
+    #     print(words)
+
+def print_top(filename):
+    frequency = mkDic(filename)
+    dic2tup = list(frequency.items())
+    def get_key(element):
+        return element[1]
+    sorted(dic2tup, key = get_key, reverse = True)
+    for item in dic2tup[0:20]:
+        print(item[0])
+
 # +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
@@ -55,7 +85,7 @@ import sys
 
 def main():
     if len(sys.argv) != 3:
-        print 'usage: python wordcount.py {--count | --topcount} file'
+        print('usage: python wordcount.py {--count | --topcount} file')
         sys.exit(1)
 
     option = sys.argv[1]
@@ -65,7 +95,7 @@ def main():
     elif option == '--topcount':
         print_top(filename)
     else:
-        print 'unknown option: ' + option
+    #    print 'unknown option: ' + option
         sys.exit(1)
 
 
